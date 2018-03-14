@@ -156,7 +156,7 @@ Pager.prototype.isInfinite = function() { return this.getVar('infinite'); };
 Pager.prototype.eventsAdded = function() { return this._eventsAdded; };
 
 Pager.prototype.addEvents = function() {
-  console.log(this.id(), 'adding events');
+  //console.log(this.id(), 'adding events');
 
   var self = this;
   // Attach our scroll handler to the window to watch for the last list item to come into view.
@@ -175,7 +175,7 @@ Pager.prototype.addEvents = function() {
 };
 
 Pager.prototype.removeEvents = function() {
-  console.log(this.id(), 'removing events');
+  //console.log(this.id(), 'removing events');
 
   var self = this;
 
@@ -206,7 +206,7 @@ Pager.prototype.toInfinityAndBeyond = function() {
   this.onVisibilityChangeHandler = onVisibilityChange(el, function(visible) {
 
     if (visible) {
-      console.log('got to bottom!!', self.id());
+      //console.log('got to bottom!!', self.id());
 
       self.removeEvents();
 
@@ -226,6 +226,7 @@ Pager.prototype.toInfinityAndBeyond = function() {
           switch (theme) {
 
             case 'bootstrap_item_list':
+                dg_bootstrap.prepListItem(item);
                 html += dg.render({
                   _theme: 'list_item',
                   _item: item,
