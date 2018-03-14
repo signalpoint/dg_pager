@@ -32,7 +32,7 @@ Pager.prototype.getVar = function(name) { return this.getVars()['_' + name]; };
 Pager.prototype.getFetcher = function() { return this.getVar('fetcher'); };
 Pager.prototype.getWrapperId = function() { return this.getVar('wrapperId'); }; // @TODO this is the "list" as opposed to the wrapper
 Pager.prototype.getWrapper = function() { return this.getVar('wrapper'); };
-Pager.prototype.getWrapperTheme = function() { return this.getWrapper()({})._theme; };
+Pager.prototype.getWrapperTheme = function() { return this.getWrapper().call(this, {})._theme; };
 Pager.prototype.getDisplay = function() { return this.getVar('display'); }; // @TODO rename to rowCallback
 
 Pager.prototype.setData = function(data) { this._data = data; };
@@ -83,7 +83,7 @@ Pager.prototype.render = function() {
       var rows = self.renderRows();
 
       var pager = !isInfinite ? self.renderPager() : '';
-      dg.qs('#' + self.id()).innerHTML = dg.render(self.getWrapper()(rows)) + pager;
+      dg.qs('#' + self.id()).innerHTML = dg.render(self.getWrapper().call(self, rows)) + pager;
 
       if (isInfinite) {
         self.toInfinityAndBeyond();
@@ -156,6 +156,7 @@ Pager.prototype.addEvents = function() {
   //console.log(this.id(), 'adding events');
 
   var self = this;
+
   // Attach our scroll handler to the window to watch for the last list item to come into view.
   if (window.addEventListener) {
     var eventListeners = dg_pager.infiniteScrollEventListeners();
