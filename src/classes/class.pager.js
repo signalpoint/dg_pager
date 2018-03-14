@@ -106,7 +106,11 @@ Pager.prototype.renderRows = function() {
   for (var i = 0; i < total; i++) {
     var row = results[i];
     var item = display.call(self, row);
-    //dg.attributesInit(item);
+
+    // Support plain strings and plain markup by converting it into our expected render element.
+    if (dg.isString(item)) { item = { _text: item }; }
+    if (dg.isString(item._text)) { item._text = { _markup: item._text }; }
+
     dg.attributesInit(item._text);
 
     // Set up some nice css classes for the row.
@@ -122,16 +126,9 @@ Pager.prototype.renderRows = function() {
       else if (i == total - 1) { itemClasses.push('last'); }
     }
 
-
     rows.push(item);
-    //rows.push(dg_bootstrap.prepListItem(item)); // @TODO bootstrap item list only.
   }
-  //this.getResults().forEach(function(row) {
-  //  var display = self.getDisplay();
-  //  var item = display.call(self, row);
-  //  rows.push(dg_bootstrap.prepListItem(item));
-  //});
-  //console.log('rows', rows);
+
   return rows;
 };
 
