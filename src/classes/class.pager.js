@@ -26,14 +26,20 @@ var Pager = function(id, variables) {
 
 };
 
-Pager.prototype.id = function() { return this._id; }; // @TODO the wrapper is here, not down below where "list" should be.
+Pager.prototype.id = function() { return this._id; };
 Pager.prototype.getVars = function() { return this._variables; };
 Pager.prototype.getVar = function(name) { return this.getVars()['_' + name]; };
+
 Pager.prototype.getFetcher = function() { return this.getVar('fetcher'); };
+
+// @TODO rename to container.
 Pager.prototype.getWrapperId = function() { return this.getVar('wrapperId'); }; // @TODO this is the "list" as opposed to the wrapper
 Pager.prototype.getWrapper = function() { return this.getVar('wrapper'); };
 Pager.prototype.getWrapperTheme = function() { return this.getWrapper().call(this, {})._theme; };
-Pager.prototype.getDisplay = function() { return this.getVar('display'); }; // @TODO rename to rowCallback
+// @TODO rename to row.
+Pager.prototype.getDisplay = function() { return this.getVar('display'); };
+
+Pager.prototype.getEmpty = function() { return this.getVar('empty'); };
 
 Pager.prototype.setData = function(data) { this._data = data; };
 Pager.prototype.setPage = function(page) { this.getData().page = page; };
@@ -67,7 +73,7 @@ Pager.prototype.fetch = function() {
     pageSize: this.getLimit()
   });
   return new Promise(function(ok, err) {
-    fetcher(self.getQuery()).then(function(data) {
+    fetcher.call(self, self.getQuery()).then(function(data) {
       self.setData(data);
       ok();
     });
@@ -78,18 +84,23 @@ Pager.prototype.render = function() {
   return new Promise(function(ok, err) {
     self.fetch().then(function() {
 
-      var isInfinite = self.isInfinite();
-
-      var rows = self.renderRows();
-
-      var pager = !isInfinite ? self.renderPager() : '';
-      dg.qs('#' + self.id()).innerHTML = dg.render(self.getWrapper().call(self, rows)) + pager;
-
-      if (isInfinite) {
-        self.toInfinityAndBeyond();
-        if (ok) { ok(); }
+      var el = dg.qs('#' + self.id());
+      if (!self.getResultCount()) {
+        var empty = self.getEmpty();
+        if (empty) { el.innerHTML = dg.render(empty.call(self)); }
       }
-      else { ok(); }
+      else {
+        var isInfinite = self.isInfinite();
+        var rows = self.renderRows();
+        var pager = !isInfinite ? self.renderPager() : '';
+        var container = self.getWrapper().call(self, rows);
+        el.innerHTML = dg.render(container) + pager;
+        if (isInfinite) {
+          self.toInfinityAndBeyond();
+          if (ok) { ok(); }
+        }
+        else { ok(); }
+      }
 
     });
   });
