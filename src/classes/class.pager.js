@@ -38,8 +38,11 @@ Pager.prototype.getWrapper = function() { return this.getVar('wrapper'); };
 Pager.prototype.getWrapperTheme = function() { return this.getWrapper().call(this, {})._theme; };
 // @TODO rename to row.
 Pager.prototype.getDisplay = function() { return this.getVar('display'); };
-
 Pager.prototype.getEmpty = function() { return this.getVar('empty'); };
+Pager.prototype.runDone = function() {
+  var done = this.getVar('done');
+  if (done) { done.call(this); }
+};
 
 Pager.prototype.setData = function(data) { this._data = data; };
 Pager.prototype.setPage = function(page) { this.getData().page = page; };
@@ -96,6 +99,7 @@ Pager.prototype.render = function() {
         var container = self.getWrapper().call(self, rows);
         el.innerHTML = dg.render(container) + pager;
         if (isInfinite) {
+          self.runDone();
           self.toInfinityAndBeyond();
           if (ok) { ok(); }
         }
@@ -253,6 +257,7 @@ Pager.prototype.toInfinityAndBeyond = function() {
         }
         dg.qs('#' + self.getWrapperId()).innerHTML += html;
 
+        self.runDone();
         self.toInfinityAndBeyond();
 
       });
