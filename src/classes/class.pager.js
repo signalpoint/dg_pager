@@ -176,7 +176,7 @@ Pager.prototype.addEvents = function() {
   if (window.addEventListener) {
     var eventListeners = dg_pager.infiniteScrollEventListeners();
     eventListeners.forEach(function(name) {
-      addEventListener(name, self.onVisibilityChangeHandler, false);
+      addEventListener(name, self.onVisibilityChangeHandler, { passive: true });
     });
   } else if (window.attachEvent)  { // IE9+ :(
     var events = dg_pager.infiniteScrollEvents();
