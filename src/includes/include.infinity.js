@@ -168,3 +168,40 @@ Pager.prototype._toInfinityAndBeyond = function(direction) {
   });
 
 };
+
+// INFINITE SCROLL HELPERS
+
+Pager.prototype.isInfinite = function() { return this.getVar('infinite'); };
+Pager.prototype.getDirection = function() { return this._direction; };
+Pager.prototype.setDirection = function(direction) { this._direction = direction; };
+
+Pager.prototype.getRowCountInDom = function() {
+  return this.getList().childElementCount;
+};
+Pager.prototype.pagesAllowed = function() {
+  return this.getOption('pagesAllowed');
+};
+Pager.prototype.getPagesInDom = function() {
+  return Math.ceil(this.getRowCountInDom() / this.getLimit());
+};
+Pager.prototype.removeFromTop = function() {
+  var list = this.getList();
+  var stop = this.getLimit();
+  //console.log('removing from top, this many items', stop);
+  for (var i = 0; i < stop; i++) {
+    var child = list.childNodes[0];
+    //console.log('removing', 0, i, child);
+    list.removeChild(child);
+  }
+};
+Pager.prototype.removeFromBottom = function() {
+  var list = this.getList();
+  var start = list.childNodes.length;
+  var stop = start - this.getLimit();
+  //console.log('removing bottom, from/to', start, stop);
+  for (var i = start - 1; i >= stop; i--) {
+    var child = list.childNodes[i];
+    //console.log('removing', i, child);
+    list.removeChild(child);
+  }
+};
