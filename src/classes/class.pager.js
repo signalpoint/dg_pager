@@ -13,6 +13,7 @@ var Pager = function(id, variables) {
   this._id = id;
   this._variables = variables;
   this._query = null;
+  this._locked = false;
 
   // Prep the minimum POST data for the Service Resource.
   // @TODO this is for D7 Services, not D8 REST.
@@ -74,6 +75,10 @@ Pager.prototype.getPages = function() { return this.getData('pages'); };
 Pager.prototype.getLimit = function() { return this.getData('limit'); };
 Pager.prototype.getCount = function() { return this.getData('count'); };
 Pager.prototype.getQuery = function() { return this._query; };
+
+Pager.prototype.isLocked = function() { return this._locked; };
+Pager.prototype.lock = function() { this._locked = true; };
+Pager.prototype.unlock = function() { this._locked = false; };
 
 Pager.prototype.html = function() {
   var attrs = dg.attributes(this.getVar('attributes'));

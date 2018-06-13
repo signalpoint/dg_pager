@@ -66,6 +66,10 @@ Pager.prototype.toInfinityAndBeyond = function() {
 Pager.prototype._toInfinityAndBeyond = function(direction) {
   var self = this;
 
+  // If the pager is locked (i.e. it's already trying to fill a request, aka battling against users who aggressively
+  // scroll up and down), just bail out and let it unlock itself when the request is fullfilled.
+  if (this.isLocked()) { return; }
+
   // Did we switch directions?
   var lastDirection = this.getDirection();
   var switchedDirections = lastDirection && lastDirection != direction;
@@ -118,7 +122,9 @@ Pager.prototype._toInfinityAndBeyond = function(direction) {
 
   // Set the new page and fetch the data.
   this.setPage(destinationPage);
+  this.lock();
   this.fetch().then(function() {
+    self.unlock();
 
     // @TODO need to update the first/last classes here.
 
