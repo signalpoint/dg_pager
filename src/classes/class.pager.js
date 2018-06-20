@@ -6,8 +6,8 @@
  *  '_display'
  *  '_infinite'
  *  '_infiniteOps' {Object}
- *      pagesAllowed {Number}
- *      trimFromTop {Boolean} Defaults to false.
+ *      trimFromTop {Boolean} Trims from the top of the list after x # of pages. Defaults to false.
+ *      pagesAllowed {Number} The number of pages allowed in the DOM before trimFromTop takes effect.
  */
 var Pager = function(id, variables) {
 
@@ -28,8 +28,8 @@ var Pager = function(id, variables) {
 
     // Set up default options and merge in any custom options.
     var opDefaults = {
-      pagesAllowed: 32,
-      trimFromTop: false
+      trimFromTop: false,
+      pagesAllowed: 32
     };
     if (!variables._infiniteOps) { variables._infiniteOps = opDefaults; }
     else { variables._infiniteOps = dg.extend(opDefaults, variables._infiniteOps); }
