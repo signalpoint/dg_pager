@@ -76,3 +76,18 @@ var html = dg.render({
   
 });
 ```
+
+## Infinite Scrolling
+
+When using the `_infinite` property, you can additionally attach an `_infiniteOps` object to add options for the
+infinite scroll widget:
+
+```
+ _infinite: true,
+ _infiniteOps: {
+   trimFromTop: true,
+   pagesAllowed: 32
+ }
+```
+
+See [class.pager.js](https://github.com/signalpoint/dg_pager/blob/8.x-1.x/src/classes/class.pager.js) for full details about `_infiniteOps`.
