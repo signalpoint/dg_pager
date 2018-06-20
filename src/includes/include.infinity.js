@@ -15,7 +15,7 @@ Pager.prototype.toInfinityAndBeyond = function() {
   };
 
   // First item intersection observer.
-  if (self.getPage() && self.getPagesInDom() >= self.pagesAllowed()) {
+  if (self.getOption('trimFromTop') && self.getPage() && self.getPagesInDom() >= self.pagesAllowed()) {
     var first = list.firstChild; // Grab the first item in the list.
     var firstItemRatio = null;
     if (this._firstObserver) {
@@ -104,8 +104,9 @@ Pager.prototype._toInfinityAndBeyond = function(direction) {
   //console.log('destinationPage', destinationPage);
   //console.log('pagesInDom', pagesInDom);
 
-  // If there are too many pages in the DOM, remove the oldest one (depending on what direction we're moving).
-  if (pagesInDom >= pagesAllowed) {
+  // If we're trimming from the top, and there are too many pages in the DOM, remove the oldest one (depending on what
+  // direction we're moving).
+  if (self.getOption('trimFromTop') && pagesInDom >= pagesAllowed) {
     //console.log('too many pages in the DOM...');
     var scrollTo = null;
     if (goingDown) {

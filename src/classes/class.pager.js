@@ -7,6 +7,7 @@
  *  '_infinite'
  *  '_infiniteOps' {Object}
  *      pagesAllowed {Number}
+ *      trimFromTop {Boolean} Defaults to false.
  */
 var Pager = function(id, variables) {
 
@@ -22,11 +23,21 @@ var Pager = function(id, variables) {
     limit: variables._limit ? variables._limit : 10
   };
 
-  // Set up default options for infinite scroll if it is configured for infinite.
-  if (variables._infinite && !variables._infiniteOps) {
-    variables._infiniteOps = { pagesAllowed: 2 };
+  // For infinite scrolling...
+  if (variables._infinite) {
+
+    // Set up default options and merge in any custom options.
+    var opDefaults = {
+      pagesAllowed: 32,
+      trimFromTop: false
+    };
+    if (!variables._infiniteOps) { variables._infiniteOps = opDefaults; }
+    else { variables._infiniteOps = dg.extend(opDefaults, variables._infiniteOps); }
+
+    // Prep the mutation observer variables as null.
     this._firstObserver = null;
     this._lastObserver = null;
+
   }
 
   // Add this pager to the globals for reference.
@@ -37,7 +48,9 @@ var Pager = function(id, variables) {
 Pager.prototype.id = function() { return this._id; };
 Pager.prototype.getVars = function() { return this._variables; };
 Pager.prototype.getVar = function(name) { return this.getVars()['_' + name]; };
-Pager.prototype.getOption = function(name) { return this.getVars()._infiniteOps[name]; };
+Pager.prototype.getOption = function(name) {
+  return this.getVars()._infiniteOps[name];
+};
 
 Pager.prototype.getFetcher = function() { return this.getVar('fetcher'); };
 
@@ -126,7 +139,6 @@ Pager.prototype.render = function() {
 
     });
   });
-
 };
 
 Pager.prototype.renderRows = function() {
