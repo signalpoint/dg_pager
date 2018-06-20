@@ -16,6 +16,7 @@ var Pager = function(id, variables) {
   this._variables = variables;
   this._query = null;
   this._locked = false;
+  this._route = dg.getRoute();
 
   // Prep the minimum POST data for the Service Resource.
   // @TODO this is for D7 Services, not D8 REST.
@@ -94,6 +95,8 @@ Pager.prototype.isLocked = function() { return this._locked; };
 Pager.prototype.lock = function() { this._locked = true; };
 Pager.prototype.unlock = function() { this._locked = false; };
 
+Pager.prototype.getRoute = function() { return this._route; };
+
 Pager.prototype.html = function() {
   var attrs = dg.attributes(this.getVar('attributes'));
   return '<div ' + attrs + '></div>';
@@ -109,7 +112,10 @@ Pager.prototype.fetch = function() {
   return new Promise(function(ok, err) {
     fetcher.call(self, self.getQuery()).then(function(data) {
       self.setData(data);
-      ok();
+      if (self.getRoute().key != dg.getRoute().key) {
+        if (err) { err(); }
+      }
+      else { ok(); }
     });
   });
 };
@@ -138,6 +144,8 @@ Pager.prototype.render = function() {
         else { ok(); }
       }
 
+    }, function() {
+      // Something went wrong, i.e. the probably changed routes before the fetch call finished.
     });
   });
 };

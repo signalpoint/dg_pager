@@ -67,7 +67,7 @@ Pager.prototype._toInfinityAndBeyond = function(direction) {
   var self = this;
 
   // If the pager is locked (i.e. it's already trying to fill a request, aka battling against users who aggressively
-  // scroll up and down), just bail out and let it unlock itself when the request is fullfilled.
+  // scroll up and down), just bail out and let it unlock itself when the request is fulfilled.
   if (this.isLocked()) { return; }
 
   // Did we switch directions?
@@ -126,7 +126,6 @@ Pager.prototype._toInfinityAndBeyond = function(direction) {
   this.lock();
   this.fetch().then(function() {
     self.unlock();
-
     // @TODO need to update the first/last classes here.
 
     // Render all the rows. Note, many developers will return a render element here so the rows wont' technically be
@@ -172,6 +171,8 @@ Pager.prototype._toInfinityAndBeyond = function(direction) {
     self.runDone();
     self.toInfinityAndBeyond();
 
+  }, function() {
+    // Something went wrong, i.e. the probably changed routes before the fetch call finished.
   });
 
 };
