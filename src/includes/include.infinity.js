@@ -172,7 +172,7 @@ Pager.prototype._toInfinityAndBeyond = function(direction) {
     self.toInfinityAndBeyond();
 
   }, function() {
-    // Something went wrong, i.e. the probably changed routes before the fetch call finished.
+    // Something went wrong, i.e. they probably changed routes before the fetch call finished.
   });
 
 };
