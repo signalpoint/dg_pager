@@ -8,6 +8,7 @@
  *  '_infiniteOps' {Object}
  *      trimFromTop {Boolean} Trims from the top of the list after x # of pages. Defaults to false.
  *      pagesAllowed {Number} The number of pages allowed in the DOM before trimFromTop takes effect.
+ *  '_page' {Number} The page to get, defaults to 0.
  *  '_limit' {Number} The number of rows per page, defaults to 20.
  */
 var Pager = function(id, variables) {
@@ -159,7 +160,7 @@ Pager.prototype.renderRows = function() {
   var display = self.getDisplay();
   for (var i = 0; i < total; i++) {
     var row = results[i];
-    var item = display.call(self, row);
+    var item = display.call(self, row, i);
 
     // Support plain strings and plain markup by converting it into our expected render element.
     if (dg.isString(item)) { item = { _text: item }; }
