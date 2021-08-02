@@ -1,16 +1,28 @@
 {
   "name": "dg_pager",
-  "version": "0.0.0",
-  "description": "A module for DrupalGap 8.",
+  "version": "8.0.0",
+  "description": "",
   "main": "dg_pager.min.js",
-  "keywords": ["dg_pager"],
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/signalpoint/dg_pager"
+  },
+  "keywords": [
+    "drupalgap"
+  ],
+  "author": "",
   "devDependencies": {
-    "gulp": "~3.9.1",
-    "gulp-cli": "~1.4.0",
+    "gulp": "^4.0.2",
     "gulp-concat": "~2.6.1",
-    "gulp-uglify": "~2.0.1",
-    "gulp-watch": "~4.3.11",
+    "gulp-install": "^1.1.0",
     "gulp-minify": "0.0.15",
-    "gulp-rename": "~1.2.2"
+    "gulp-minify-css": "~1.2.4",
+    "gulp-rename": "~1.2.2",
+    "gulp-uglify": "~2.0.1",
+    "gulp-watch": "~4.3.11"
+  },
+  "dependencies": {
+    "gulp-cli": "^2.2.0"
   }
 }
