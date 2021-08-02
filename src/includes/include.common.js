@@ -18,6 +18,7 @@ dg_pager.clearAll = function() {
       pager._lastObserver.disconnect();
     }
   }
+  dg._pagers = {};
 };
 
 dg_pager.onclickHandler = function(id, which) {
