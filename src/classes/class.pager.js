@@ -146,7 +146,7 @@ Pager.prototype.render = function() {
       }
 
     }, function() {
-      // Something went wrong, i.e. the probably changed routes before the fetch call finished.
+      // Something went wrong, i.e. they probably changed routes before the fetch call finished.
     });
   });
 };
@@ -191,12 +191,18 @@ Pager.prototype.renderPager = function() {
   var id = this.id();
   var previousBtn = this.getPage() != 0 ? dg.b(dg.t('Go back'), {
     _attributes: {
-      onclick: "dg_pager.onclickHandler('" + id + "', 'prev')"
+      onclick: "dg_pager.onclickHandler('" + id + "', 'prev')",
+      class: [
+        'dg-pager-btn'
+      ]
     }
   }) : '';
   var nextBtn = this.getPage() != this.getPages() - 1 ? dg.b(dg.t('Load more'), {
     _attributes: {
-      onclick: "dg_pager.onclickHandler('" + id + "', 'next')"
+      onclick: "dg_pager.onclickHandler('" + id + "', 'next')",
+      class: [
+        'dg-pager-btn'
+      ]
     }
   }) : '';
   return previousBtn + nextBtn;
