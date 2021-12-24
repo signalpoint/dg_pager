@@ -162,14 +162,27 @@ Pager.prototype.renderRows = function() {
     var row = results[i];
     var item = display.call(self, row, i);
 
+    var itemTarget = null;
+
+    // ul, ol
     // Support plain strings and plain markup by converting it into our expected render element.
     if (dg.isString(item)) { item = { _text: item }; }
-    if (dg.isString(item._text)) { item._text = { _markup: item._text }; }
+    if (item._text) {
+      if (dg.isString(item._text)) {
+        item._text = { _markup: item._text };
+      }
+      dg.attributesInit(item._text);
+      itemTarget = item._text;
+    }
 
-    dg.attributesInit(item._text);
+    // table
+    if (item._cols) {
+      dg.attributesInit(item);
+      itemTarget = item;
+    }
 
     // Set up some nice css classes for the row.
-    var itemClasses = item._text._attributes.class;
+    var itemClasses = itemTarget._attributes.class;
     itemClasses.push(i % 2 ? 'even' : 'odd');
 
     if (isInfinite) {
