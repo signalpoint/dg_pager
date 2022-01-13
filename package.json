@@ -1,6 +1,6 @@
 {
   "name": "dg_pager",
-  "version": "8.0.0",
+  "version": "8.0.1",
   "description": "DrupalGap 8 Pager",
   "main": "dg_pager.min.js",
   "repository": {
