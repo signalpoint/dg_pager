@@ -25,5 +25,12 @@ dg_pager.onclickHandler = function(id, which) {
   var pager = dg_pager.load(id);
   var currentPage = pager.getPage();
   pager.setPage(which == 'next' ? currentPage + 1 : currentPage - 1);
-  pager.render().then(function() { dg.qs('#' + pager.id()).scrollIntoView(); });
+  pager.render().then(function() {
+
+    var scrollIntoView = !pager.getVar('skipScrollIntoView');
+    if (scrollIntoView) {
+      dg.qs('#' + pager.id()).scrollIntoView();
+    }
+
+  });
 };

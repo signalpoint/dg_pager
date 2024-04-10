@@ -10,6 +10,7 @@
  *      pagesAllowed {Number} The number of pages allowed in the DOM before trimFromTop takes effect.
  *  '_page' {Number} The page to get, defaults to 0.
  *  '_limit' {Number} The number of rows per page, defaults to 20.
+ *  '_skipScrollIntoView' {Boolean} Set to true to skip scrolling to the top of the new page. Defaults to false.
  */
 var Pager = function(id, variables) {
 
