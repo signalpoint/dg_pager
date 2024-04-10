@@ -42,25 +42,32 @@ var html = dg.render({
   _wrapper: function(rows) {
     return {
        _theme: 'container',
+       _type: 'ul',
        _attributes: {
          id: 'my-wrapper-id',
-         class: ['row']
+         class: [
+           'my-list-group'
+         ]
        },
        _children: rows
      };
   },
   
   _display: function(row) {
+
+    // You can return an html string...
+    return '<li class="my-list-group-item">' + row.foo + '</li>'
   
-     return {
-       _text: {
-         _markup: '...',
-         
-         /* ... OR ... */
-         
-         _theme: 'foo',
-       }
-     };
+    // Or you can return a render object for more complex widgets.
+    return {
+      _text: {
+        _markup: '...',
+
+        /* ... OR ... */
+
+        _theme: 'foo',
+      }
+    };
   
   },
   
