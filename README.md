@@ -30,12 +30,14 @@ var html = dg.render({
   
   _fetcher: function(query) {
   
-     // Query for the data and then resolve.
-     return new Promise(function(ok, err) {
-       
-       foo.callDrupal().then(ok);
-       
-     });
+    // Query for the data and then resolve.
+    return new Promise(function(ok, err) {
+
+      query.stuff = 123;
+      foo.callDrupal(query).then(ok);
+
+    });
+
   },
   
   _wrapperId: 'my-wrapper-id',
