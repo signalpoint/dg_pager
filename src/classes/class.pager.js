@@ -143,7 +143,10 @@ Pager.prototype.render = function() {
           self.toInfinityAndBeyond();
           if (ok) { ok(); }
         }
-        else { ok(); }
+        else {
+          self.runDone();
+          ok();
+        }
       }
 
     }, function() {
